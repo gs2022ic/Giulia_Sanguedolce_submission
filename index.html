@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#238a74" />
+    <meta name="description" content="HelloSelf goal-to-support concept prototype" />
+    <title>HelloSelf — Goal support concept</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="prototype-shell" aria-label="HelloSelf concept prototype">
+      <div class="prototype-label">Concept prototype</div>
+
+      <section class="screen active" id="progress-screen" aria-labelledby="progress-title">
+        <header class="topbar">
+          <h1 id="progress-title">Progress</h1>
+          <div class="topbar-actions" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 6.5 12 13l9-6.5M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>
+            <span class="avatar"><span></span></span>
+          </div>
+        </header>
+
+        <nav class="tabs" aria-label="Progress sections">
+          <button class="tab active" type="button">Plan</button>
+          <button class="tab" type="button" data-toast="Measures are outside this prototype.">Measures</button>
+          <button class="tab" type="button" data-toast="Pathways are outside this prototype.">Pathways</button>
+        </nav>
+
+        <div class="screen-body progress-body">
+          <div class="section-heading">
+            <h2>Active Goals</h2>
+            <span class="chevron" aria-hidden="true"></span>
+          </div>
+          <div class="goal-list" id="goal-list" aria-live="polite"></div>
+
+          <button class="primary floating-action" type="button" data-go="goal-screen" data-new-goal>
+            <span class="plus" aria-hidden="true"></span>
+            Add a new Goal
+          </button>
+        </div>
+
+        <nav class="bottom-nav" aria-label="Primary navigation">
+          <button type="button" data-go="sessions-screen"><span class="nav-icon calendar" aria-hidden="true"></span><small>Sessions</small></button>
+          <button class="active" type="button"><span class="nav-icon progress" aria-hidden="true"></span><small>Progress</small></button>
+          <button type="button" data-toast="Companion is outside this prototype."><span class="nav-icon companion" aria-hidden="true"></span><small>Companion</small></button>
+          <button type="button" data-toast="Notebook is outside this prototype."><span class="nav-icon notebook" aria-hidden="true"></span><small>Notebook</small></button>
+          <button type="button" data-toast="Settings are outside this prototype."><span class="nav-icon settings" aria-hidden="true">⚙</span><small>Settings</small></button>
+        </nav>
+      </section>
+
+      <section class="screen" id="goal-screen" aria-labelledby="goal-title">
+        <header class="detail-header">
+          <button class="icon-button back" type="button" data-go="progress-screen" aria-label="Back"></button>
+          <h1 id="goal-title">Add a goal</h1>
+          <button class="text-button" type="button" data-go="progress-screen">Cancel</button>
+        </header>
+        <div class="screen-body form-page">
+          <div class="step-label">YOUR GOAL</div>
+          <h2>What would you like to work towards?</h2>
+          <p class="supporting-copy">Use words that feel right to you. You can change this later.</p>
+          <label class="field-label" for="goal-input">I aim to…</label>
+          <textarea id="goal-input" rows="4" maxlength="140" placeholder="For example, feel calmer at work"></textarea>
+          <div class="field-meta"><span>Keep this meaningful to you</span><span id="goal-count">0/140</span></div>
+
+          <div class="reassurance-card">
+            <span class="shield" aria-hidden="true">✓</span>
+            <p><strong>Your words stay yours.</strong><br />This prototype will not interpret or rewrite your goal.</p>
+          </div>
+
+          <div class="bottom-actions">
+            <button class="primary full-width" id="goal-continue" type="button" disabled>Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="baseline-screen" aria-labelledby="baseline-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="goal-screen" aria-label="Back"></button>
+          <h1 id="baseline-title">Set a baseline</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body baseline-page">
+          <div class="goal-summary">
+            <span>I aim to…</span>
+            <h2 data-goal-text>Feel more confident handling a difficult family situation</h2>
+          </div>
+
+          <div class="score-card">
+            <span class="step-label">TODAY</span>
+            <h3>How close do you feel to this goal?</h3>
+            <p>A starting point helps you notice change over time. There is no right answer.</p>
+            <div class="score-value" id="score-value">4</div>
+            <input id="score-slider" type="range" min="1" max="10" value="4" aria-label="Current goal score" />
+            <div class="range-labels"><span>1 · Not close yet</span><span>10 · Achieved</span></div>
+          </div>
+
+          <label class="field-label" for="baseline-note">What does this score mean for you today? <em>Optional</em></label>
+          <textarea id="baseline-note" rows="3" placeholder="Add a short note in your own words"></textarea>
+
+          <div class="bottom-actions static">
+            <button class="primary full-width" id="save-baseline" type="button" data-go="support-screen">Save baseline</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="support-screen" aria-labelledby="support-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="baseline-screen" aria-label="Back"></button>
+          <h1 id="support-title">Goal saved</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body support-page">
+          <div class="success-mark" aria-hidden="true">✓</div>
+          <p class="eyebrow">YOUR GOAL IS READY</p>
+          <h2 data-goal-text>Feel more confident handling a difficult family situation</h2>
+          <p class="supporting-copy centre">You can return and track this goal whenever it feels useful.</p>
+
+          <article class="support-invite">
+            <div class="invite-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M6 7.5h20v14H14l-5 4v-4H6z"/><path d="M11 13h10M11 17h7"/></svg>
+            </div>
+            <div>
+              <p class="eyebrow">OPTIONAL SUPPORT</p>
+              <h3>Curious what kind of support could fit you?</h3>
+              <p>Answer a few questions to see therapists aligned with your needs, preferred working style, and availability. You choose what to share.</p>
+            </div>
+            <div class="time-hint">About 2 minutes · No booking or commitment</div>
+            <button class="primary full-width" type="button" data-go="quiz-intro-screen">Take the quiz to see my matches</button>
+            <button class="secondary full-width" type="button" data-go="saved-screen">Not right now</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" id="quiz-intro-screen" aria-labelledby="quiz-intro-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="support-screen" aria-label="Back"></button>
+          <h1 id="quiz-intro-title">Your therapy match</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body quiz-intro-page">
+          <div class="match-illustration" aria-hidden="true">
+            <span class="match-person one"></span><span class="match-person two"></span><span class="match-line"></span>
+          </div>
+          <p class="eyebrow">A MORE PERSONAL START</p>
+          <h2>Find support that fits you</h2>
+          <p>Answer a few questions about what you want support with, how you prefer to work, and when you’re available.</p>
+          <div class="quiz-benefits">
+            <div><span>1</span><p><strong>Tell us what matters</strong><small>No diagnosis and no right answers.</small></p></div>
+            <div><span>2</span><p><strong>See suitable therapists</strong><small>With a clear reason for each match.</small></p></div>
+            <div><span>3</span><p><strong>You make the choice</strong><small>Nothing is booked automatically.</small></p></div>
+          </div>
+          <div class="bottom-actions static">
+            <button class="primary full-width" type="button" data-go="matching-screen">Start the matching quiz</button>
+            <button class="secondary full-width" type="button" data-go="saved-screen">Maybe later</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="matching-screen" aria-labelledby="matching-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="support-screen" aria-label="Back"></button>
+          <h1 id="matching-title">Find the right support</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body matching-page">
+          <div class="quiz-progress"><span style="width:33%"></span></div>
+          <p class="step-label">1 OF 3 · WHAT MATTERS</p>
+          <h2>What would you most like support with?</h2>
+          <p class="supporting-copy">Confirm the area that feels closest. We won’t infer it from your goal.</p>
+
+          <div class="choice-grid" data-select="single" data-output="support-area" role="group" aria-label="Support area">
+            <button class="choice selected" type="button">Family and relationships</button>
+            <button class="choice" type="button">Stress and difficult emotions</button>
+            <button class="choice" type="button">Self-understanding and confidence</button>
+            <button class="choice" type="button">Something else</button>
+            <button class="choice" type="button">I’m not sure yet</button>
+          </div>
+
+          <div class="bottom-actions static">
+            <button class="primary full-width" type="button" data-go="style-screen">Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="style-screen" aria-labelledby="style-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="matching-screen" aria-label="Back"></button>
+          <h1 id="style-title">Your therapy match</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body matching-page">
+          <div class="quiz-progress"><span style="width:66%"></span></div>
+          <p class="step-label">2 OF 3 · WORKING TOGETHER</p>
+          <h2>What would help you feel supported?</h2>
+          <p class="supporting-copy">Choose up to two. You can revisit these preferences later.</p>
+          <div class="choice-grid" data-select="multiple" data-max="2" data-output="therapy-style" role="group" aria-label="Preferred therapy style">
+            <button class="choice selected" type="button">A warm space to talk</button>
+            <button class="choice" type="button">Practical tools to try</button>
+            <button class="choice" type="button">Clear structure and goals</button>
+            <button class="choice" type="button">Gentle challenge and reflection</button>
+            <button class="choice" type="button">Help me decide</button>
+          </div>
+          <div class="bottom-actions static">
+            <button class="primary full-width" type="button" data-go="preferences-screen">Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="preferences-screen" aria-labelledby="preferences-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="style-screen" aria-label="Back"></button>
+          <h1 id="preferences-title">Your therapy match</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body matching-page">
+          <div class="quiz-progress"><span style="width:100%"></span></div>
+          <p class="step-label">3 OF 3 · PRACTICAL FIT</p>
+          <h2>What works for your life?</h2>
+          <p class="supporting-copy">Availability matters too. A good match should be realistic to attend.</p>
+          <label class="field-label" for="availability">When generally works for you?</label>
+          <select id="availability">
+            <option>Weekday evenings</option>
+            <option>Weekday daytime</option>
+            <option>Weekends</option>
+            <option>I’m flexible</option>
+          </select>
+          <label class="field-label" for="therapist-preference">Therapist preference</label>
+          <select id="therapist-preference">
+            <option>No preference</option>
+            <option>Woman</option>
+            <option>Man</option>
+            <option>Non-binary</option>
+          </select>
+
+          <div class="consent-card">
+            <label class="toggle-row">
+              <input id="share-goal" type="checkbox" />
+              <span class="toggle" aria-hidden="true"></span>
+              <span><strong>Include my goal in matching</strong><small>Optional. You can edit it before anything is shared.</small></span>
+            </label>
+            <blockquote data-goal-text>Feel more confident handling a difficult family situation</blockquote>
+          </div>
+
+          <div class="bottom-actions static">
+            <button class="primary full-width" type="button" data-go="results-screen">See my therapist matches</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="results-screen" aria-labelledby="results-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="preferences-screen" aria-label="Back"></button>
+          <h1 id="results-title">Your matches</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body results-page">
+          <p class="eyebrow">BASED ON YOUR ANSWERS</p>
+          <h2>Three therapists to consider</h2>
+          <p class="supporting-copy">Each is available at your preferred time. You decide who feels right.</p>
+
+          <article class="therapist-card featured" data-therapist="Dr Maya Thompson">
+            <div class="therapist-head"><div class="therapist-avatar maya">MT</div><div><h3>Dr Maya Thompson</h3><p>Clinical Psychologist</p></div><span class="match-badge">Strong match</span></div>
+            <p class="match-reason"><strong>Why this match:</strong> Experience supporting family and relationship concerns, with a warm and collaborative style.</p>
+            <div class="therapist-tags"><span>Relationships</span><span>Warm & reflective</span><span>Evenings</span></div>
+            <button class="primary full-width choose-therapist" type="button">Choose Maya</button>
+          </article>
+
+          <article class="therapist-card" data-therapist="Dr Alex Morgan">
+            <div class="therapist-head"><div class="therapist-avatar alex">AM</div><div><h3>Dr Alex Morgan</h3><p>Counselling Psychologist</p></div></div>
+            <p class="match-reason"><strong>Why this match:</strong> A supportive approach focused on understanding patterns and building confidence.</p>
+            <div class="therapist-tags"><span>Relationships</span><span>Person-centred</span><span>Evenings</span></div>
+            <button class="secondary full-width choose-therapist" type="button">Choose Alex</button>
+          </article>
+
+          <article class="therapist-card" data-therapist="Dr Priya Shah">
+            <div class="therapist-head"><div class="therapist-avatar priya">PS</div><div><h3>Dr Priya Shah</h3><p>Clinical Psychologist</p></div></div>
+            <p class="match-reason"><strong>Why this match:</strong> Combines gentle reflection with practical tools for difficult conversations.</p>
+            <div class="therapist-tags"><span>Communication</span><span>Integrative</span><span>Evenings</span></div>
+            <button class="secondary full-width choose-therapist" type="button">Choose Priya</button>
+          </article>
+          <p class="prototype-disclaimer">Fictional profiles for demonstration only.</p>
+        </div>
+      </section>
+
+      <section class="screen" id="review-screen" aria-labelledby="review-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="matching-screen" aria-label="Back"></button>
+          <h1 id="review-title">Review your request</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body review-page">
+          <p class="step-label">NOTHING BOOKED YET</p>
+          <h2>Meet <span id="review-therapist-heading">Dr Maya Thompson</span></h2>
+          <p class="supporting-copy">Request an introduction, then decide whether this therapist feels right for you.</p>
+          <div class="review-card">
+            <div><span>Therapist</span><strong id="review-therapist">Dr Maya Thompson</strong></div>
+            <div><span>Support with</span><strong id="review-choice">Family and relationships</strong></div>
+            <div><span>Preferred style</span><strong id="review-style">A warm space to talk</strong></div>
+            <div><span>Availability</span><strong id="review-availability">Weekday evenings</strong></div>
+            <div id="review-goal-row"><span>Goal shared</span><strong data-goal-text>Feel more confident handling a difficult family situation</strong></div>
+          </div>
+          <div class="privacy-note">
+            <span class="shield" aria-hidden="true">✓</span>
+            <p>The matching team will use only these preferences to help find appropriate support. Your goal is never automatically interpreted.</p>
+          </div>
+          <div class="bottom-actions static">
+            <button class="primary full-width" type="button" data-go="confirmation-screen">Request an introduction</button>
+            <button class="secondary full-width" type="button" data-go="results-screen">Choose someone else</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="confirmation-screen" aria-labelledby="confirmation-title">
+        <header class="detail-header compact">
+          <span></span>
+          <h1 id="confirmation-title">Request received</h1>
+          <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body confirmation-page">
+          <div class="success-mark large" aria-hidden="true">✓</div>
+          <p class="eyebrow">YOU’VE TAKEN THE NEXT STEP</p>
+          <h2>Your introduction request is ready.</h2>
+          <p>Our matching team will check availability and contact you to explain what happens next.</p>
+          <div class="next-step-card">
+            <span>What happens next</span>
+            <ol>
+              <li>We confirm the therapist’s availability.</li>
+              <li>You receive the session details and pricing.</li>
+              <li>You decide whether you want to book.</li>
+            </ol>
+          </div>
+          <button class="primary full-width" type="button" data-go="saved-screen">Return to my goal</button>
+        </div>
+      </section>
+
+      <section class="screen" id="saved-screen" aria-labelledby="saved-title">
+        <header class="topbar">
+          <h1 id="saved-title">Progress</h1>
+          <div class="topbar-actions" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 6.5 12 13l9-6.5M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>
+            <span class="avatar"><span></span></span>
+          </div>
+        </header>
+        <nav class="tabs" aria-label="Progress sections">
+          <button class="tab active" type="button">Plan</button><button class="tab" type="button">Measures</button><button class="tab" type="button">Pathways</button>
+        </nav>
+        <div class="screen-body progress-body saved-body">
+          <div class="section-heading"><h2>Active Goals</h2><span class="chevron" aria-hidden="true"></span></div>
+          <div class="goal-list" id="saved-goal-list" aria-live="polite"></div>
+          <button class="primary floating-action" type="button" data-go="goal-screen" data-new-goal><span class="plus" aria-hidden="true"></span>Add another Goal</button>
+        </div>
+        <nav class="bottom-nav" aria-label="Primary navigation">
+          <button type="button" data-go="sessions-screen"><span class="nav-icon calendar"></span><small>Sessions</small></button>
+          <button class="active" type="button"><span class="nav-icon progress"></span><small>Progress</small></button>
+          <button type="button"><span class="nav-icon companion"></span><small>Companion</small></button>
+          <button type="button"><span class="nav-icon notebook"></span><small>Notebook</small></button>
+          <button type="button"><span class="nav-icon settings">⚙</span><small>Settings</small></button>
+        </nav>
+      </section>
+
+      <section class="screen" id="tracker-screen" aria-labelledby="tracker-title">
+        <header class="detail-header compact">
+          <button class="icon-button back" type="button" data-go="saved-screen" aria-label="Back"></button>
+          <h1 id="tracker-title">Goal progress</h1>
+          <button class="icon-button close" type="button" data-go="saved-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body tracker-page">
+          <div class="goal-summary tracker-summary">
+            <span>I aim to…</span>
+            <h2 data-goal-text>Feel more confident handling a difficult family situation</h2>
+          </div>
+
+          <section class="chart-card" aria-labelledby="chart-heading">
+            <div class="chart-heading-row">
+              <div><p class="eyebrow">YOUR PROGRESS</p><h3 id="chart-heading">How this goal has felt over time</h3></div>
+              <div class="latest-score"><strong id="latest-score">6</strong><span>Latest</span></div>
+            </div>
+            <p class="chart-help">Select any point to revisit what was happening that day.</p>
+            <div class="chart-wrap">
+              <svg id="progress-chart" viewBox="0 0 420 250" role="img" aria-label="Goal scores over time"></svg>
+            </div>
+          </section>
+
+          <article class="point-detail" id="point-detail" aria-live="polite">
+            <div class="point-detail-top"><span id="point-date">7 Sep</span><strong><span id="point-score">6</span>/10</strong></div>
+            <p id="point-note">I communicated one boundary calmly.</p>
+          </article>
+
+          <section class="new-check-in" aria-labelledby="new-check-in-title">
+            <p class="eyebrow">ADD AN UPDATE</p>
+            <h3 id="new-check-in-title">Where are you today?</h3>
+
+            <label class="field-label" for="tracking-date">Date</label>
+            <input class="date-input" id="tracking-date" type="date" />
+            <p class="date-help">Recording this later? Choose the day the experience happened.</p>
+            <p class="field-error" id="tracking-date-error" role="alert" hidden>Choose today or an earlier date. Progress cannot be recorded in the future.</p>
+
+            <div class="track-score-row">
+              <label class="field-label" for="tracking-slider">Your score</label>
+              <output id="tracking-score" for="tracking-slider">6</output>
+            </div>
+            <input id="tracking-slider" type="range" min="1" max="10" value="6" aria-label="New goal score" />
+            <div class="range-labels"><span>1 · Not close yet</span><span>10 · Achieved</span></div>
+
+            <label class="field-label" for="tracking-note">What influenced your score? <em>Optional</em></label>
+            <textarea id="tracking-note" rows="3" placeholder="Add a short note in your own words"></textarea>
+            <button class="primary full-width" id="save-tracking" type="button">Add to my progress</button>
+          </section>
+        </div>
+      </section>
+
+      <section class="screen" id="sessions-screen" aria-labelledby="sessions-title">
+        <header class="topbar">
+          <h1 id="sessions-title">Sessions</h1>
+          <div class="topbar-actions" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 6.5 12 13l9-6.5M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>
+            <span class="avatar"><span></span></span>
+          </div>
+        </header>
+
+        <div class="session-tools" aria-label="Session tools">
+          <button type="button" data-toast="Video sessions are outside this prototype." aria-label="Video sessions">
+            <svg viewBox="0 0 30 30"><rect x="3" y="7" width="17" height="16" rx="4"/><path d="m20 12 7-4v14l-7-4"/></svg>
+          </button>
+          <button type="button" data-toast="Companion sessions are outside this prototype." aria-label="Companion sessions">
+            <svg viewBox="0 0 30 30"><path d="M4 7h20v15H13l-5 4v-4H4z"/><path d="M10 13h8M10 17h6"/></svg>
+          </button>
+          <button type="button" data-go="session-learn-screen" aria-label="Learn about personalised support">
+            <svg viewBox="0 0 30 30"><path d="m4 11 11-6 11 6-11 6zM8 14v7c4 3 10 3 14 0v-7"/><path d="M26 11v8"/></svg>
+          </button>
+        </div>
+
+        <div class="screen-body sessions-page">
+          <article class="sessions-hero">
+            <p class="eyebrow">BEYOND THERAPY</p>
+            <h2>Don’t lose momentum after therapy ends</h2>
+            <p>Make what you learned second nature, with an expert therapist reviewing your plan every month.</p>
+            <button class="primary" type="button" data-go="session-learn-screen">Learn more</button>
+            <div class="journey-line" aria-hidden="true"><span class="journey-flag"></span><span class="journey-dot"></span></div>
+          </article>
+
+          <section class="empty-sessions">
+            <div class="soft-icon" aria-hidden="true">
+              <svg viewBox="0 0 36 36"><path d="M7 9h22v17H17l-6 5v-5H7z"/><path d="M13 15h10M13 20h7"/></svg>
+            </div>
+            <h2>No booked sessions</h2>
+            <p>Not sure where to begin? A short quiz can help you explore therapists based on your needs and preferences.</p>
+            <div class="commitment-note"><span>✓</span> No booking, payment, or commitment</div>
+            <button class="primary full-width" type="button" data-go="quiz-intro-screen">Take the quiz to see my matches</button>
+            <button class="quiet-button" type="button" data-toast="You can return whenever you feel ready.">Maybe later</button>
+
+            <div class="matching-explainer">
+              <p class="eyebrow">HOW MATCHING WORKS</p>
+              <div class="mini-how-list">
+                <div><span>1</span><p><strong>Tell us what matters</strong><small>Your needs, working style, and availability.</small></p></div>
+                <div><span>2</span><p><strong>See your personalised matches</strong><small>With a clear reason for every suggestion.</small></p></div>
+                <div><span>3</span><p><strong>You decide what happens next</strong><small>Explore first. Nothing is booked automatically.</small></p></div>
+                <div><span>4</span><p><strong>Easy rematching</strong><small>Members can request another therapist without judgement if the relationship does not feel right.</small></p></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <nav class="bottom-nav" aria-label="Primary navigation">
+          <button class="active" type="button"><span class="nav-icon calendar"></span><small>Sessions</small></button>
+          <button type="button" data-go="progress-screen"><span class="nav-icon progress"></span><small>Progress</small></button>
+          <button type="button" data-toast="Companion is outside this prototype."><span class="nav-icon companion"></span><small>Companion</small></button>
+          <button type="button" data-toast="Notebook is outside this prototype."><span class="nav-icon notebook"></span><small>Notebook</small></button>
+          <button type="button" data-toast="Settings are outside this prototype."><span class="nav-icon settings">⚙</span><small>Settings</small></button>
+        </nav>
+      </section>
+
+      <section class="screen dark-screen" id="session-learn-screen" aria-labelledby="session-learn-title">
+        <header class="dark-sheet-header">
+          <div class="sheet-handle" aria-hidden="true"></div>
+          <button class="dark-close" type="button" data-go="sessions-screen" aria-label="Close"></button>
+        </header>
+        <div class="screen-body learn-page">
+          <p class="eyebrow">BEYOND THERAPY</p>
+          <h1 id="session-learn-title">Don’t lose momentum after therapy ends</h1>
+          <div class="learn-journey" aria-hidden="true"><span class="flag-shape"></span><span class="route-line"></span><span class="route-star">✦</span></div>
+          <p class="learn-intro">Master what you’ve learned, with continued support from a therapist.</p>
+
+          <h2>Here’s how</h2>
+          <div class="how-list">
+            <div><span class="how-number initials">GS</span><p><strong>Get a personalised plan</strong><small>Make the skills from therapy second nature.</small></p></div>
+            <div><span class="how-number pebble">●</span><p><strong>Reflect with Companion weekly</strong><small>See what’s working, and where to focus next.</small></p></div>
+            <div><span class="how-number therapist-mini">T</span><p><strong>A therapist updates your plan every month</strong><small>Stay your best self, with ongoing expert care.</small></p></div>
+          </div>
+
+          <div class="trust-strip discount-strip"><span>%</span><p><strong>Get 10% discount on sessions with your therapist</strong></p></div>
+
+          <div class="programme-price">
+            <p><strong>First month for just £1,</strong> then £40/month.<br />Cancel anytime.</p>
+            <div class="availability-lock"><span>▣</span> Available after 6 more sessions</div>
+          </div>
+          <div class="dark-cta-area">
+            <button class="dark-secondary full-width" type="button" data-go="sessions-screen">Back to sessions</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
