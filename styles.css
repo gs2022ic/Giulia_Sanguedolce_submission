@@ -160,9 +160,6 @@ input[type="range"] { width: 100%; margin: 19px 0 6px; accent-color: var(--purpl
 .support-invite h3 { margin: 7px 0 8px; font-size: 23px; line-height: 1.2; }
 .support-invite p:not(.eyebrow) { color: var(--muted); line-height: 1.45; }
 .support-invite button { margin-top: 12px; }
-.tracker-support-invite { margin: 18px 0 24px; padding: 20px; }
-.tracker-support-invite h3 { font-size: 21px; }
-.tracker-support-invite .time-hint { margin-top: 14px; }
 .time-hint { margin: 20px 0 3px; color: var(--muted); text-align: center; font-size: 12px; font-weight: 650; }
 
 .quiz-intro-page { padding-top: 28px; }

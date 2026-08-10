@@ -37,6 +37,7 @@ function freshState() {
     baselineNote: '',
     supportArea: 'Family and relationships',
     quizReturnScreen: 'support-screen',
+    supportScreenMode: 'goal',
     therapyStyle: ['A warm space to talk'],
     availability: 'Weekday evenings',
     therapistPreference: 'No preference',
@@ -125,6 +126,20 @@ function setQuizReturnScreen(id) {
   state.quizReturnScreen = returnScreen;
   document.querySelector('#quiz-intro-back').dataset.go = returnScreen;
   document.querySelector('#quiz-maybe-later').dataset.go = returnScreen;
+  persist();
+}
+
+function configureSupportScreen(mode = 'goal') {
+  const afterTracking = mode === 'tracking';
+  state.supportScreenMode = mode;
+  document.querySelector('#support-title').textContent = afterTracking ? 'Progress updated' : 'Goal saved';
+  document.querySelector('#support-status').textContent = afterTracking ? 'YOUR UPDATE IS SAVED' : 'YOUR GOAL IS READY';
+  document.querySelector('#support-copy').textContent = afterTracking
+    ? 'Your score is now part of this goal’s history. You can return and add another update whenever it feels useful.'
+    : 'You can return and track this goal whenever it feels useful.';
+  document.querySelector('#support-back').dataset.go = afterTracking ? 'tracker-screen' : 'baseline-screen';
+  document.querySelector('#support-close').dataset.go = afterTracking ? 'tracker-screen' : 'progress-screen';
+  document.querySelector('#support-dismiss').dataset.go = afterTracking ? 'tracker-screen' : 'saved-screen';
   persist();
 }
 
@@ -332,6 +347,7 @@ document.querySelector('#save-baseline').addEventListener('click', () => {
   syncGoal();
   persist();
   renderChart();
+  configureSupportScreen('goal');
 });
 
 const trackingDate = document.querySelector('#tracking-date');
@@ -373,8 +389,8 @@ document.querySelector('#save-tracking').addEventListener('click', () => {
   noteField.value = '';
   persist();
   renderChart(selectedIndex);
-  showToast(existingIndex >= 0 ? 'That day’s progress was updated.' : 'Your progress update was added.');
-  document.querySelector('#point-detail').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  configureSupportScreen('tracking');
+  showScreen('support-screen');
 });
 
 document.addEventListener('click', (event) => {
@@ -476,6 +492,7 @@ function restoreState() {
   document.querySelector('#review-therapist-heading').textContent = state.selectedTherapist;
   restoreChoiceGroup('support-area', state.supportArea);
   restoreChoiceGroup('therapy-style', state.therapyStyle);
+  configureSupportScreen(state.supportScreenMode || 'goal');
   setQuizReturnScreen(state.quizReturnScreen || 'support-screen');
   syncGoal();
   renderChart();
