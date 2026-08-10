@@ -38,6 +38,7 @@ function freshState() {
     supportArea: 'Family and relationships',
     quizReturnScreen: 'support-screen',
     supportScreenMode: 'goal',
+    supportPromptGoalId: null,
     therapyStyle: ['A warm space to talk'],
     availability: 'Weekday evenings',
     therapistPreference: 'No preference',
@@ -132,6 +133,7 @@ function setQuizReturnScreen(id) {
 function configureSupportScreen(mode = 'goal') {
   const afterTracking = mode === 'tracking';
   state.supportScreenMode = mode;
+  state.supportPromptGoalId = getActiveGoal()?.id || null;
   document.querySelector('#support-title').textContent = afterTracking ? 'Progress updated' : 'Goal saved';
   document.querySelector('#support-status').textContent = afterTracking ? 'YOUR UPDATE IS SAVED' : 'YOUR GOAL IS READY';
   document.querySelector('#support-copy').textContent = afterTracking
@@ -140,7 +142,9 @@ function configureSupportScreen(mode = 'goal') {
   document.querySelector('#support-back').dataset.go = afterTracking ? 'tracker-screen' : 'baseline-screen';
   document.querySelector('#support-close').dataset.go = afterTracking ? 'tracker-screen' : 'progress-screen';
   document.querySelector('#support-dismiss').dataset.go = afterTracking ? 'tracker-screen' : 'saved-screen';
-  document.querySelector('#support-opt-out').checked = Boolean(getActiveGoal()?.suppressSupportPrompt);
+  const optedOut = Boolean(getActiveGoal()?.suppressSupportPrompt);
+  document.querySelector('#support-opt-out').checked = optedOut;
+  document.querySelector('#support-opt-out-confirmation').hidden = !optedOut;
   persist();
 }
 
@@ -175,12 +179,23 @@ function createGoalCard(goal) {
   const count = document.createElement('span');
   count.textContent = `Latest score · ${goal.trackerData.length} ${goal.trackerData.length === 1 ? 'update' : 'updates'}`;
   scoreRow.append(score, count);
+  const actions = document.createElement('div');
+  actions.className = 'goal-card-actions';
   const button = document.createElement('button');
   button.className = 'secondary full-width';
   button.type = 'button';
   button.dataset.trackGoal = goal.id;
   button.textContent = 'View & track progress';
-  article.append(eyebrow, title, scoreRow, button);
+  actions.append(button);
+  if (!goal.isFictional) {
+    const cancel = document.createElement('button');
+    cancel.className = 'cancel-goal-card';
+    cancel.type = 'button';
+    cancel.dataset.cancelGoal = goal.id;
+    cancel.textContent = 'Cancel goal';
+    actions.append(cancel);
+  }
+  article.append(eyebrow, title, scoreRow, actions);
   return article;
 }
 
@@ -407,9 +422,10 @@ document.querySelector('#save-tracking').addEventListener('click', () => {
 });
 
 document.querySelector('#support-opt-out').addEventListener('change', (event) => {
-  const goal = getActiveGoal();
+  const goal = state.goals.find((item) => item.id === state.supportPromptGoalId) || getActiveGoal();
   if (!goal) return;
   goal.suppressSupportPrompt = event.target.checked;
+  document.querySelector('#support-opt-out-confirmation').hidden = !event.target.checked;
   persist();
 });
 
@@ -438,6 +454,13 @@ document.querySelector('#confirm-cancel-goal').addEventListener('click', () => {
 });
 
 document.addEventListener('click', (event) => {
+  const cancelButton = event.target.closest('[data-cancel-goal]');
+  if (cancelButton) {
+    setActiveGoal(cancelButton.dataset.cancelGoal);
+    cancelGoalDialog.showModal();
+    return;
+  }
+
   const trackButton = event.target.closest('[data-track-goal]');
   if (trackButton) {
     setActiveGoal(trackButton.dataset.trackGoal);

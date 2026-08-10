@@ -165,6 +165,7 @@ input[type="range"] { width: 100%; margin: 19px 0 6px; accent-color: var(--purpl
 .support-opt-out strong, .support-opt-out small { display: block; }
 .support-opt-out strong { font-size: 14px; line-height: 1.35; }
 .support-opt-out small { margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+.preference-confirmation { margin: 8px 2px 0 !important; color: var(--green) !important; font-size: 12px; font-weight: 750; line-height: 1.4; }
 .time-hint { margin: 20px 0 3px; color: var(--muted); text-align: center; font-size: 12px; font-weight: 650; }
 
 .quiz-intro-page { padding-top: 28px; }
@@ -218,6 +219,9 @@ blockquote { margin: 16px 0 0 55px; padding: 11px 13px; border-left: 3px solid v
 .goal-list { display: grid; gap: 14px; margin-top: 24px; padding-bottom: 80px; }
 .goal-list .active-goal-card { margin-top: 0; }
 .active-goal-card h3 { margin: 8px 0 20px; font-size: 23px; }
+.goal-card-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: stretch; }
+.goal-card-actions .secondary { min-width: 0; }
+.cancel-goal-card { min-height: 55px; padding: 0 13px; border: 1px solid #d7dedb; border-radius: 16px; background: white; color: #8b443e; font-size: 13px; font-weight: 750; }
 .demo-goal { position: relative; margin-top: 24px; padding-top: 29px; }
 .demo-label { position: absolute; top: 0; right: 0; padding: 6px 10px; border-radius: 0 17px 0 12px; background: #f1eee8; color: #68716e; font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .goal-score { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
