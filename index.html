@@ -126,7 +126,7 @@
               <p>Answer a few questions to see therapists aligned with your needs, preferred working style, and availability. You choose what to share.</p>
             </div>
             <div class="time-hint">About 2 minutes · No booking or commitment</div>
-            <button class="primary full-width" type="button" data-go="quiz-intro-screen">Take the quiz to see my matches</button>
+            <button class="primary full-width" type="button" data-go="quiz-intro-screen" data-quiz-entry>Take the quiz to see my matches</button>
             <button class="secondary full-width" type="button" data-go="saved-screen">Not right now</button>
           </article>
         </div>
@@ -134,7 +134,7 @@
 
       <section class="screen" id="quiz-intro-screen" aria-labelledby="quiz-intro-title">
         <header class="detail-header compact">
-          <button class="icon-button back" type="button" data-go="support-screen" aria-label="Back"></button>
+          <button class="icon-button back" id="quiz-intro-back" type="button" data-go="support-screen" aria-label="Back"></button>
           <h1 id="quiz-intro-title">Your therapy match</h1>
           <button class="icon-button close" type="button" data-go="progress-screen" aria-label="Close"></button>
         </header>
@@ -152,7 +152,7 @@
           </div>
           <div class="bottom-actions static">
             <button class="primary full-width" type="button" data-go="matching-screen">Start the matching quiz</button>
-            <button class="secondary full-width" type="button" data-go="saved-screen">Maybe later</button>
+            <button class="secondary full-width" id="quiz-maybe-later" type="button" data-go="support-screen">Maybe later</button>
           </div>
         </div>
       </section>
@@ -387,6 +387,16 @@
             <p id="point-note">I communicated one boundary calmly.</p>
           </article>
 
+          <article class="support-invite tracker-support-invite">
+            <div>
+              <p class="eyebrow">OPTIONAL SUPPORT</p>
+              <h3>Would support with this goal feel useful?</h3>
+              <p>Take a short quiz to explore therapists aligned with what matters to you. Nothing is booked automatically.</p>
+            </div>
+            <div class="time-hint">About 2 minutes · You choose what to share</div>
+            <button class="primary full-width" type="button" data-go="quiz-intro-screen" data-quiz-entry>Take the quiz to see my matches</button>
+          </article>
+
           <section class="new-check-in" aria-labelledby="new-check-in-title">
             <p class="eyebrow">ADD AN UPDATE</p>
             <h3 id="new-check-in-title">Where are you today?</h3>
@@ -447,7 +457,7 @@
             <h2>No booked sessions</h2>
             <p>Not sure where to begin? A short quiz can help you explore therapists based on your needs and preferences.</p>
             <div class="commitment-note"><span>✓</span> No booking, payment, or commitment</div>
-            <button class="primary full-width" type="button" data-go="quiz-intro-screen">Take the quiz to see my matches</button>
+            <button class="primary full-width" type="button" data-go="quiz-intro-screen" data-quiz-entry>Take the quiz to see my matches</button>
             <button class="quiet-button" type="button" data-toast="You can return whenever you feel ready.">Maybe later</button>
 
             <div class="matching-explainer">

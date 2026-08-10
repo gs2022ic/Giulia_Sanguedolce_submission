@@ -36,6 +36,7 @@ function freshState() {
     baselineScore: 5,
     baselineNote: '',
     supportArea: 'Family and relationships',
+    quizReturnScreen: 'support-screen',
     therapyStyle: ['A warm space to talk'],
     availability: 'Weekday evenings',
     therapistPreference: 'No preference',
@@ -116,6 +117,14 @@ function showScreen(id) {
   screens.forEach((screen) => screen.classList.toggle('active', screen === target));
   window.scrollTo({ top: 0, behavior: 'smooth' });
   state.lastScreen = id;
+  persist();
+}
+
+function setQuizReturnScreen(id) {
+  const returnScreen = document.getElementById(id) ? id : 'progress-screen';
+  state.quizReturnScreen = returnScreen;
+  document.querySelector('#quiz-intro-back').dataset.go = returnScreen;
+  document.querySelector('#quiz-maybe-later').dataset.go = returnScreen;
   persist();
 }
 
@@ -379,6 +388,10 @@ document.addEventListener('click', (event) => {
   const navigation = event.target.closest('[data-go]');
   if (navigation && navigation.id !== 'goal-continue') {
     if (navigation.hasAttribute('data-new-goal')) beginNewGoal();
+    if (navigation.hasAttribute('data-quiz-entry')) {
+      const currentScreen = document.querySelector('.screen.active');
+      setQuizReturnScreen(currentScreen?.id || 'progress-screen');
+    }
     showScreen(navigation.dataset.go);
     return;
   }
@@ -463,6 +476,7 @@ function restoreState() {
   document.querySelector('#review-therapist-heading').textContent = state.selectedTherapist;
   restoreChoiceGroup('support-area', state.supportArea);
   restoreChoiceGroup('therapy-style', state.therapyStyle);
+  setQuizReturnScreen(state.quizReturnScreen || 'support-screen');
   syncGoal();
   renderChart();
   renderGoalLists();
