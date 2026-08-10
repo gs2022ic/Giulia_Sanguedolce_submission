@@ -160,6 +160,11 @@ input[type="range"] { width: 100%; margin: 19px 0 6px; accent-color: var(--purpl
 .support-invite h3 { margin: 7px 0 8px; font-size: 23px; line-height: 1.2; }
 .support-invite p:not(.eyebrow) { color: var(--muted); line-height: 1.45; }
 .support-invite button { margin-top: 12px; }
+.support-opt-out { display: grid; grid-template-columns: 22px 1fr; align-items: start; gap: 11px; margin: 18px 0 4px; padding: 14px; border-radius: 13px; background: var(--green-pale); cursor: pointer; }
+.support-opt-out input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--green); }
+.support-opt-out strong, .support-opt-out small { display: block; }
+.support-opt-out strong { font-size: 14px; line-height: 1.35; }
+.support-opt-out small { margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
 .time-hint { margin: 20px 0 3px; color: var(--muted); text-align: center; font-size: 12px; font-weight: 650; }
 
 .quiz-intro-page { padding-top: 28px; }
@@ -335,6 +340,18 @@ blockquote { margin: 16px 0 0 55px; padding: 11px 13px; border-left: 3px solid v
 .track-score-row .field-label { margin: 0; }
 .track-score-row output { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #ded6f4; color: var(--purple); font-size: 19px; font-weight: 800; }
 .new-check-in .primary { margin-top: 22px; }
+.goal-management { margin-top: 26px; padding: 20px 18px; border-top: 1px solid var(--line); text-align: center; }
+.goal-management[hidden] { display: none; }
+.goal-management h3 { margin: 0 0 7px; font-size: 18px; }
+.goal-management p { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.danger-button { min-height: 51px; border: 1.5px solid #a13d35; border-radius: 15px; background: white; color: #a13d35; font-size: 16px; font-weight: 750; }
+.danger-button:hover { background: #fff5f4; }
+.confirmation-dialog { width: min(calc(100% - 36px), 410px); padding: 0; border: 0; border-radius: 22px; color: var(--ink); box-shadow: 0 24px 70px rgba(18, 44, 38, .28); }
+.confirmation-dialog::backdrop { background: rgba(10, 30, 26, .52); backdrop-filter: blur(2px); }
+.confirmation-dialog form { padding: 25px 22px 22px; }
+.confirmation-dialog h2 { margin: 7px 0 10px; font-size: 25px; }
+.confirmation-dialog form > p:not(.eyebrow) { margin: 0; color: var(--muted); line-height: 1.5; }
+.dialog-actions { display: grid; gap: 11px; margin-top: 24px; }
 
 .results-page { padding-bottom: 35px; }
 .therapist-card { margin: 18px 0; padding: 18px; border: 1px solid var(--line); border-radius: 19px; background: white; box-shadow: 0 7px 22px rgba(18,63,56,.07); }

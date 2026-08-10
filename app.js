@@ -23,7 +23,7 @@ function copyEntries(entries) {
 }
 
 function sampleGoalRecord() {
-  return { id: 'fictional-example', title: sampleGoalTitle, isFictional: true, trackerData: copyEntries(sampleTrackerData) };
+  return { id: 'fictional-example', title: sampleGoalTitle, isFictional: true, suppressSupportPrompt: false, trackerData: copyEntries(sampleTrackerData) };
 }
 
 function freshState() {
@@ -140,6 +140,7 @@ function configureSupportScreen(mode = 'goal') {
   document.querySelector('#support-back').dataset.go = afterTracking ? 'tracker-screen' : 'baseline-screen';
   document.querySelector('#support-close').dataset.go = afterTracking ? 'tracker-screen' : 'progress-screen';
   document.querySelector('#support-dismiss').dataset.go = afterTracking ? 'tracker-screen' : 'saved-screen';
+  document.querySelector('#support-opt-out').checked = Boolean(getActiveGoal()?.suppressSupportPrompt);
   persist();
 }
 
@@ -201,7 +202,13 @@ function setActiveGoal(id) {
   goalInput.value = '';
   syncGoal();
   renderChart();
+  syncGoalManagement();
   persist();
+}
+
+function syncGoalManagement() {
+  const goal = getActiveGoal();
+  document.querySelector('#goal-management').hidden = !goal || Boolean(goal.isFictional);
 }
 
 function beginNewGoal() {
@@ -334,6 +341,7 @@ document.querySelector('#save-baseline').addEventListener('click', () => {
     id: state.pendingGoalId || `goal-${Date.now()}`,
     title: state.pendingGoalTitle || goalInput.value.trim(),
     isFictional: false,
+    suppressSupportPrompt: false,
     trackerData: [{ date: today, score: Number(scoreSlider.value), note: document.querySelector('#baseline-note').value.trim() }],
   };
   const existingIndex = state.goals.findIndex((item) => item.id === goal.id);
@@ -389,8 +397,44 @@ document.querySelector('#save-tracking').addEventListener('click', () => {
   noteField.value = '';
   persist();
   renderChart(selectedIndex);
-  configureSupportScreen('tracking');
-  showScreen('support-screen');
+  if (goal.suppressSupportPrompt) {
+    showToast(existingIndex >= 0 ? 'That day’s progress was updated.' : 'Your progress update was added.');
+    document.querySelector('#point-detail').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    configureSupportScreen('tracking');
+    showScreen('support-screen');
+  }
+});
+
+document.querySelector('#support-opt-out').addEventListener('change', (event) => {
+  const goal = getActiveGoal();
+  if (!goal) return;
+  goal.suppressSupportPrompt = event.target.checked;
+  persist();
+});
+
+const cancelGoalDialog = document.querySelector('#cancel-goal-dialog');
+
+document.querySelector('#cancel-goal').addEventListener('click', () => {
+  const goal = getActiveGoal();
+  if (!goal || goal.isFictional) return;
+  cancelGoalDialog.showModal();
+});
+
+document.querySelector('#confirm-cancel-goal').addEventListener('click', () => {
+  const goal = getActiveGoal();
+  if (!goal || goal.isFictional) return;
+  state.goals = state.goals.filter((item) => item.id !== goal.id);
+  const nextGoal = state.goals.find((item) => item.id === 'fictional-example') || state.goals[0];
+  state.activeGoalId = nextGoal.id;
+  trackerData = nextGoal.trackerData;
+  syncGoal();
+  renderChart();
+  renderGoalLists();
+  syncGoalManagement();
+  persist();
+  showScreen('saved-screen');
+  showToast('Goal cancelled. The fictional example is still available.');
 });
 
 document.addEventListener('click', (event) => {
@@ -497,6 +541,7 @@ function restoreState() {
   syncGoal();
   renderChart();
   renderGoalLists();
+  syncGoalManagement();
   const resumableScreen = document.getElementById(state.lastScreen) ? state.lastScreen : 'progress-screen';
   screens.forEach((screen) => screen.classList.toggle('active', screen.id === resumableScreen));
   persist();

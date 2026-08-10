@@ -126,6 +126,10 @@
               <p>Answer a few questions to see therapists aligned with your needs, preferred working style, and availability. You choose what to share.</p>
             </div>
             <div class="time-hint">About 2 minutes · No booking or commitment</div>
+            <label class="support-opt-out" for="support-opt-out">
+              <input id="support-opt-out" type="checkbox" />
+              <span><strong>Don’t show this invitation again for this goal</strong><small>You can still take the matching quiz from Sessions.</small></span>
+            </label>
             <button class="primary full-width" type="button" data-go="quiz-intro-screen" data-quiz-entry>Take the quiz to see my matches</button>
             <button class="secondary full-width" id="support-dismiss" type="button" data-go="saved-screen">Not right now</button>
           </article>
@@ -407,6 +411,12 @@
             <textarea id="tracking-note" rows="3" placeholder="Add a short note in your own words"></textarea>
             <button class="primary full-width" id="save-tracking" type="button">Add to my progress</button>
           </section>
+
+          <section class="goal-management" id="goal-management" aria-labelledby="goal-management-title" hidden>
+            <h3 id="goal-management-title">Goal settings</h3>
+            <p>You can stop tracking this goal whenever it is no longer useful.</p>
+            <button class="danger-button full-width" id="cancel-goal" type="button">Cancel this goal</button>
+          </section>
         </div>
       </section>
 
@@ -501,7 +511,19 @@
         </div>
       </section>
 
-      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog class="confirmation-dialog" id="cancel-goal-dialog" aria-labelledby="cancel-goal-title">
+      <form method="dialog">
+        <p class="eyebrow">GOAL SETTINGS</p>
+        <h2 id="cancel-goal-title">Cancel this goal?</h2>
+        <p>This will remove the goal and its tracking history from the prototype. It will not affect any therapy or appointments.</p>
+        <div class="dialog-actions">
+          <button class="secondary full-width" type="submit" value="keep">Keep tracking</button>
+          <button class="danger-button full-width" id="confirm-cancel-goal" type="submit" value="cancel">Yes, cancel goal</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </main>
     <script src="app.js"></script>
   </body>
