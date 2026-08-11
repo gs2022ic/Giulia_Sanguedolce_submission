@@ -4,6 +4,12 @@ A mobile-first web prototype for the HelloSelf AI Engineer take-home task.
 
 The prototype explores one missed handoff in the member app: moving from self-guided goal tracking to finding human support. It keeps the member's own wording intact, makes numerical progress meaningful through dated notes, and offers an optional, low-commitment route to explore therapist support shaped by member-confirmed preferences. The same journey replaces the abrupt call to get in touch from an empty Sessions screen.
 
+## Live prototype
+
+**[Open the interactive prototype](https://gs2022ic.github.io/Giulia_Sanguedolce_submission/)**
+
+The prototype is mobile-first. For the closest experience, open the link on a phone or use a narrow browser window.
+
 ## Run locally
 
 No installation, account, API key, build step, or external service is required.
